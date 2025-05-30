@@ -1,7 +1,6 @@
-/* Ajustements couleurs pour matcher le logo noir & blanc */
 body {
-  background: #fff;      /* Fond blanc */
-  color: #000;           /* Texte noir */
+  background: #000;
+  color: #FFD700;
   font-family: 'Poppins', sans-serif;
   text-align: center;
   padding: 2rem;
@@ -33,14 +32,14 @@ p.prompt { font-size: 1rem; }
   justify-content: center;
   gap: 0.4rem;
   font-size: 2.5rem;
-  color: #000;     /* Étoiles noires par défaut */
+  color: #555;
   margin: 1rem 0;
   cursor: pointer;
   user-select: none;
 }
-.star { transition: transform 0.2s, color 0.3s; }
-.star:hover { transform: scale(1.2); color: #555; /* Gris foncé au survol */ }
-.star.selected { color: #000 !important; }
+.star { transition: transform 0.2s; }
+.star:hover { transform: scale(1.2); }
+.star.selected { color: #f5b50a !important; }
 
 #commentSection {
   display: none;
@@ -65,9 +64,20 @@ p.prompt { font-size: 1rem; }
   transform: translateY(10px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-#commentSection.show p { opacity: 1; transform: translateY(0); transition-delay: 0s; }
-#commentSection.show textarea { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
-#commentSection.show button { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+#commentSection.show p {
+  opacity: 1;
+  transform: translateY(0);
+}
+#commentSection.show textarea {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+#commentSection.show button {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
 
 #thankyouSection {
   display: none;
@@ -80,33 +90,35 @@ p.prompt { font-size: 1rem; }
   opacity: 1;
   transform: translateY(0);
 }
-#thankyouSection p { font-size: 1.2rem; color: #000; }
+#thankyouSection p { font-size: 1.2rem; }
 
 textarea {
   width: 80%;
   height: 100px;
-  background: #f1f1f1;        /* Fond gris clair */
-  border: 2px solid #000;    /* Bordure noire */
+  background: rgba(17,17,17,0.8);
+  border: 2px solid #FFD700;
   border-radius: 8px;
-  color: #000;
+  color: #FFD700;
   padding: 0.5rem;
   font-size: 1rem;
   resize: none;
+  backdrop-filter: blur(2px);
 }
 
 button {
   margin-top: 1rem;
-  background: #000;   /* Bouton noir */
-  color: #fff;        /* Texte blanc */
+  background: #FFD700;
+  color: #000;
   border: none;
   padding: 0.7rem 1.5rem;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: background 0.3s, color 0.3s;
 }
 button:hover {
-  background: #333;   /* Gris foncé au survol */
-  transform: translateY(-2px);
+  background: #000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
 }

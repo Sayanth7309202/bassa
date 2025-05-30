@@ -1,4 +1,4 @@
-const LINK_GOOGLE_AVIS = "https://search.google.com/local/writereview?placeid=ChIJk7lYVgcvjEcRU3hWKJlSMjk";
+const LINK_GOOGLE_AVIS = "https://search.google.com/local/writereview?placeid=ChIJufuUa4PPjUcRqe2i8vuFmzo";
 const SCRIPT_URL      = "https://script.google.com/macros/s/AKfycbyI7TskOreDLZkAmwa71CdJcwXQTb8K_lowkXAaP-PIsyz3i39QMGW_3cKGqPyoAn16Dw/exec";
 
 const stars          = document.querySelectorAll('.star');
