@@ -1,78 +1,124 @@
 body {
-    background-color: #000000;
-    color: #FFD700;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  .logo {
-    max-width: 150px;
-    margin: 0 auto 20px;
-    display: block;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-  }
-  
-  .stars {
-    font-size: 2.5rem;
-    color: #555;
-    margin-bottom: 1rem;
-  }
-  
-  .star {
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  .star.selected,
-  .star:hover,
-  .star:hover ~ .star {
-    color: #FFD700;
-  }
-  
-  #message {
-    margin: 1rem 0;
-    font-size: 1rem;
-    color: #FFD700;
-  }
-  
-  #commentSection {
-    display: none;
-    margin-top: 1rem;
-  }
-  
-  textarea {
-    width: 80%;
-    height: 100px;
-    background-color: #111;
-    border: 2px solid #FFD700;
-    border-radius: 8px;
-    color: #FFD700;
-    padding: 0.5rem;
-    font-size: 1rem;
-    resize: none;
-  }
-  
-  button {
-    margin-top: 1rem;
-    background-color: #FFD700;
-    color: #000;
-    border: none;
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #000;
-    color: #FFD700;
-    border: 2px solid #FFD700;
-  }
+  background: #000;
+  color: #FFD700;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  padding: 2rem;
+}
+
+#ratingSection {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+#ratingSection.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.logo {
+  max-width: 150px;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+h1, p.prompt {
+  margin: 0.5rem 0;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+h1 { font-size: 2rem; font-weight: 600; }
+p.prompt { font-size: 1rem; }
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 2.5rem;
+  color: #555;
+  margin: 1rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+.star { transition: transform 0.2s; }
+.star:hover { transform: scale(1.2); }
+.star.selected { color: #f5b50a !important; }
+
+#commentSection {
+  display: none;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+#commentSection.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+#commentSection.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+#commentSection p,
+#commentSection textarea,
+#commentSection button {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#commentSection.show p {
+  opacity: 1;
+  transform: translateY(0);
+}
+#commentSection.show textarea {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+#commentSection.show button {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+#thankyouSection {
+  display: none;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+#thankyouSection.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+#thankyouSection p { font-size: 1.2rem; }
+
+textarea {
+  width: 80%;
+  height: 100px;
+  background: rgba(17,17,17,0.8);
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  color: #FFD700;
+  padding: 0.5rem;
+  font-size: 1rem;
+  resize: none;
+  backdrop-filter: blur(2px);
+}
+
+button {
+  margin-top: 1rem;
+  background: #FFD700;
+  color: #000;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+button:hover {
+  background: #000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+}
