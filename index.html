@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avis - Votre Entreprise</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 2em; }
+    h1 { color: #333; }
+    .stars { font-size: 2em; color: #ccc; cursor: pointer; }
+    .stars .star:hover, .stars .star.selected { color: #f5b50a; }
+    #message { margin: 1em 0; font-size: 1.1em; }
+    #commentSection { display: none; margin-top: 1em; }
+    #commentSection textarea { width: 80%; height: 100px; }
+    #commentSection button { padding: 0.5em 1em; font-size: 1em; }
+  </style>
+</head>
+<body>
+
+<h1>Laissez-nous votre avis</h1>
+<p>Quelle note nous donneriez-vous ?</p>
+
+<div id="stars" class="stars">
+  <!-- Étoiles de 1 à 5 -->
+  <span class="star" data-value="1">&#9733;</span>
+  <span class="star" data-value="2">&#9733;</span>
+  <span class="star" data-value="3">&#9733;</span>
+  <span class="star" data-value="4">&#9733;</span>
+  <span class="star" data-value="5">&#9733;</span>
+</div>
+
+<div id="message"></div>
+
+<div id="commentSection">
+  <p>Vous avez donné moins de 5 étoiles. Comment pouvons-nous nous améliorer ?</p>
+  <textarea id="comment" placeholder="Votre commentaire..."></textarea><br>
+  <button id="submitComment">Envoyer</button>
+</div>
+
+<script>
+  // Variables à personnaliser :
+  const LINK_GOOGLE_AVIS = "https://search.google.com/local/writereview?placeid=ChIJufuUa4PPjUcRqe2i8vuFmzo";  // <--- Remplacez par le lien copié à l'étape 1
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyI7TskOreDLZkAmwa71CdJcwXQTb8K_lowkXAaP-PIsyz3i39QMGW_3cKGqPyoAn16Dw/exec";              // <--- Remplacez par l'URL du script obtenue à l'étape 2
+
+  const starsContainer = document.getElementById('stars');
+  const stars = document.querySelectorAll('.star');
+  const message = document.getElementById('message');
+  const commentSection = document.getElementById('commentSection');
+  const commentTextarea = document.getElementById('comment');
+  const submitButton = document.getElementById('submitComment');
+
+  let selectedRating = 0;
+
+  // Coloration des étoiles au survol et après sélection
+  stars.forEach(star => {
+    star.addEventListener('mouseover', () => {
+      star.style.color = "#f5b50a";
+      // colorer toutes les étoiles jusqu'à celle survolée
+      let val = star.getAttribute('data-value');
+      stars.forEach(s => {
+        s.style.color = (s.getAttribute('data-value') <= val) ? "#f5b50a" : "#ccc";
+      });
+    });
+    star.addEventListener('mouseout', () => {
+      stars.forEach(s => {
+        s.style.color = (s.classList.contains('selected')) ? "#f5b50a" : "#ccc";
+      });
+    });
+    star.addEventListener('click', () => {
+      // Sélection de la note
+      selectedRating = parseInt(star.getAttribute('data-value'));
+      stars.forEach(s => s.classList.remove('selected'));
+      // Marquer toutes les étoiles jusqu'à la sélection en "selected"
+      stars.forEach(s => {
+        if (parseInt(s.getAttribute('data-value')) <= selectedRating) {
+          s.classList.add('selected');
+          s.style.color = "#f5b50a";
+        } else {
+          s.style.color = "#ccc";
+        }
+      });
+      // Réagir en fonction de la note :
+      if (selectedRating === 5) {
+        message.textContent = "Merci beaucoup pour votre note de 5 étoiles ! Vous allez être redirigé vers notre page Google…";
+        commentSection.style.display = "none";
+        // Redirection vers le formulaire d'avis Google après un court délai
+        lockInputs();
+        setTimeout(() => {
+          window.location.href = LINK_GOOGLE_AVIS;
+        }, 100);
+      } else {
+        message.textContent = "Merci pour votre retour. Vous pouvez nous laisser un commentaire ci-dessous.";
+        commentSection.style.display = "block";
+      }
+    });
+  });
+
+  // Envoi du commentaire au Google Script lorsque l'utilisateur clique sur "Envoyer"
+  submitButton.addEventListener('click', () => {
+    const commentaire = commentTextarea.value.trim();
+    if (!commentaire) {
+      alert("Veuillez écrire un commentaire avant d'envoyer.");
+      return;
+    }
+    // Préparer les données à envoyer
+    const data = new FormData();
+    data.append('rating', selectedRating);
+    data.append('comment', commentaire);
+    // Envoyer la requête POST au script Google
+    fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' })
+      .then(() => {
+        // Confirmation à l'utilisateur
+        message.textContent = "Merci, nous avons bien reçu votre commentaire.";
+        commentSection.style.display = "none";
+        lockInputs();
+      })
+      .catch(err => {
+        console.error("Erreur lors de l'envoi du commentaire:", err);
+        alert("Une erreur est survenue, veuillez réessayer plus tard.");
+      });
+  });
+
+  function lockInputs() {
+  // Désactive les étoiles
+  stars.forEach(star => {
+    star.style.pointerEvents = "none";
+    star.style.opacity = "0.6"; // Optionnel : effet visuel pour montrer que c'est grisé
+  });
+
+  // Désactive le champ commentaire et le bouton
+  commentTextarea.disabled = true;
+  submitButton.disabled = true;
+}
+</script>
+
+</body>
+</html>
